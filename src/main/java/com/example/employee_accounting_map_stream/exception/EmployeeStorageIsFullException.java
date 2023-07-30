@@ -1,4 +1,4 @@
-package com.example.employee_accounting_map.exception;
+package com.example.employee_accounting_map_stream.exception;
 
 public class EmployeeStorageIsFullException extends RuntimeException {
 

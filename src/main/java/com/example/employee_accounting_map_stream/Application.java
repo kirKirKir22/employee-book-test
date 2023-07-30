@@ -1,4 +1,4 @@
-package com.example.employee_accounting_map;
+package com.example.employee_accounting_map_stream;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

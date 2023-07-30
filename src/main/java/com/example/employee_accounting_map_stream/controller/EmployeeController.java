@@ -1,5 +1,7 @@
-package com.example.employee_accounting_map;
+package com.example.employee_accounting_map_stream.controller;
 
+import com.example.employee_accounting_map_stream.dto.Employee;
+import com.example.employee_accounting_map_stream.Service.EmployeeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,8 +21,9 @@ public class EmployeeController {
     }
 
     @GetMapping("/add")
-    public Employee addEmployee(@RequestParam String firstName, @RequestParam String lastName) {
-        return employeeService.addEmployee(firstName, lastName);
+    public Employee addEmployee(@RequestParam String firstName, @RequestParam String lastName,
+                                @RequestParam int department, @RequestParam double salary) {
+        return employeeService.addEmployee(firstName, lastName, department, salary);
     }
 
     @GetMapping("/remove")
