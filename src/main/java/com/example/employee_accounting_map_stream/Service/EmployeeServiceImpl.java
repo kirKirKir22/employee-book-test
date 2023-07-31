@@ -17,6 +17,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final Map<String, Employee> employeeMap;
     private static final int MAX_EMPLOYEES = 100;
 
+    private String generateKey(String firstName, String lastName) {
+        return firstName + lastName;
+    }
+
+
+
     public EmployeeServiceImpl() {
         employeeMap = new HashMap<>();
 
@@ -29,7 +35,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeMap.size() < MAX_EMPLOYEES) {
             throw new EmployeeStorageIsFullException("превышен лимит количества сотрудников в фирме");
         }
-        String key = firstName + lastName;
+        String key = generateKey(firstName, lastName);
+
         if (employeeMap.containsKey(newEmployee)) {
             throw new EmployeeAlreadyAddedException("в коллекции уже есть такой сотрудник");
         }
@@ -39,12 +46,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
-        Employee employee = employeeMap.remove(firstName + lastName);
-        if (!employeeMap.containsValue(employee)) {
-            throw new EmployeeNotFoundException("сотрудник не найден");
+        String key = generateKey(firstName, lastName);
 
+        if (!employeeMap.containsKey(key)) {
+
+            throw new EmployeeNotFoundException("сотрудник не найден");
         }
+        Employee employee = employeeMap.remove(key);
+
         return employee;
+
     }
 
     @Override
