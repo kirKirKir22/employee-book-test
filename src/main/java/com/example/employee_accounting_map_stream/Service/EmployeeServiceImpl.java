@@ -4,6 +4,7 @@ import com.example.employee_accounting_map_stream.dto.Employee;
 import com.example.employee_accounting_map_stream.exception.EmployeeAlreadyAddedException;
 import com.example.employee_accounting_map_stream.exception.EmployeeNotFoundException;
 import com.example.employee_accounting_map_stream.exception.EmployeeStorageIsFullException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -22,7 +23,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 
-
     public EmployeeServiceImpl() {
         employeeMap = new HashMap<>();
 
@@ -30,7 +30,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(String firstName, String lastName, int department, double salary) {
-        Employee newEmployee = new Employee(firstName, lastName, department, salary);
+        Employee newEmployee = new Employee(
+                StringUtils.capitalize(firstName),
+                StringUtils.capitalize(lastName),
+                department,
+                salary);
 
         if (employeeMap.size() < MAX_EMPLOYEES) {
             throw new EmployeeStorageIsFullException("превышен лимит количества сотрудников в фирме");
