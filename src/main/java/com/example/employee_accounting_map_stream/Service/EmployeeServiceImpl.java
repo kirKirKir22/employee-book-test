@@ -29,20 +29,23 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee addEmployee(String firstName, String lastName, int department, double salary) {
+    public Employee addEmployee
+            (String firstName, String lastName, int department, double salary) {
         Employee newEmployee = new Employee(
                 StringUtils.capitalize(firstName),
                 StringUtils.capitalize(lastName),
                 department,
                 salary);
 
-        if (employeeMap.size() < MAX_EMPLOYEES) {
-            throw new EmployeeStorageIsFullException("превышен лимит количества сотрудников в фирме");
+        if (employeeMap.size() == MAX_EMPLOYEES) {
+            throw new EmployeeStorageIsFullException
+                    ("превышен лимит количества сотрудников в фирме");
         }
         String key = generateKey(firstName, lastName);
 
-        if (employeeMap.containsKey(newEmployee)) {
-            throw new EmployeeAlreadyAddedException("в коллекции уже есть такой сотрудник");
+        if (employeeMap.containsKey(key)) {
+            throw new EmployeeAlreadyAddedException
+                    ("в коллекции уже есть такой сотрудник");
         }
         employeeMap.put(key, newEmployee);
         return newEmployee;
@@ -64,9 +67,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findEmployee(String firstName, String lastName) {
+
         Employee employee = employeeMap.get(firstName + lastName);
 
-        if (employeeMap.containsKey(employee)) {
+        String key = generateKey(firstName, lastName);
+
+        if (employeeMap.containsKey(key)) {
             return employee;
         }
         throw new EmployeeNotFoundException("сотрудник не найден");
